@@ -2,3 +2,4 @@
 
 - Bootstarp
 - antd
+- ant-design icons
