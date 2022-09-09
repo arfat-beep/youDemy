@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 const register = () => {
   const [name, setName] = useState("arfat");
-  const [email, setEmail] = useState("rahmna@gmail.com");
+  const [email, setEmail] = useState("rahmnaasdfasdf@gmail.com");
   const [password, setPassword] = useState("asdfasd");
   const handleSubmit = async (e) => {
     e.preventDefault();
