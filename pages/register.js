@@ -11,11 +11,14 @@ const register = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const { data } = await axios.post(`http://localhost:8000/api/register`, {
-        name,
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/register`,
+        {
+          name,
+          email,
+          password,
+        }
+      );
       console.log(data);
       toast.success("Registration successfull. Please login");
       setLoading(false);
