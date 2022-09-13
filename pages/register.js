@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 import { toast } from "react-toastify";
 import { SyncOutlined } from "@ant-design/icons";
 const register = () => {
@@ -69,6 +70,12 @@ const register = () => {
             </button>
           </div>
         </form>
+        <p className="text-center p-3">
+          Already registered?{" "}
+          <Link href={"/login"}>
+            <a>Login</a>
+          </Link>
+        </p>
       </div>
     </>
   );
