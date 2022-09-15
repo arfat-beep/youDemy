@@ -6,13 +6,14 @@ import "../public/css/style.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TopNav from "../components/TopNav";
+import { Provider } from "../context";
 const _app = ({ Component, pageProps }) => {
   return (
-    <>
+    <Provider>
       <ToastContainer position="top-center" />
       <TopNav />
       <Component {...pageProps} />
-    </>
+    </Provider>
   );
 };
 

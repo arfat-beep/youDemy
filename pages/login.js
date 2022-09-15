@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { SyncOutlined } from "@ant-design/icons";
+import { Context } from "../context";
 const login = () => {
+  // useState hooks
   const [name, setName] = useState("arfat");
   const [email, setEmail] = useState("rahmnaasdfasdf@gmail.com");
   const [password, setPassword] = useState("asdfasd");
   const [loading, setLoading] = useState(false);
+
+  // state
+  const { state, dispatch } = useContext(Context);
+
+  // router
+  const router = useRouter();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -17,8 +27,19 @@ const login = () => {
         email,
         password,
       });
-      console.log("login response", data);
-      // setLoading(false);
+      // console.log("login response", data);
+      dispatch({
+        type: "LOGIN",
+        payload: data,
+      });
+
+      // save login data to local storage
+      window.localStorage.setItem("user", JSON.stringify(data));
+
+      // after login redirect to home page using router from nextjs
+      router.push("/");
+
+      setLoading(false);
     } catch (err) {
       toast.error(err.response.data);
       setLoading(false);
