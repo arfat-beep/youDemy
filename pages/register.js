@@ -1,13 +1,33 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { SyncOutlined } from "@ant-design/icons";
+import { Context } from "../context";
+import { useRouter } from "next/router";
 const register = () => {
   const [name, setName] = useState("arfat");
   const [email, setEmail] = useState("rahmnaasdfasdf@gmail.com");
   const [password, setPassword] = useState("asdfasd");
   const [loading, setLoading] = useState(false);
+
+  // state
+  const {
+    state: { user },
+    dispatch,
+  } = useContext(Context);
+
+  // router
+  const router = useRouter();
+
+  // useEffect redirect if there is user logged in
+  useEffect(() => {
+    if (user !== null) {
+      router.push("/");
+      toast("You are already logged in");
+    }
+  }, [user]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
