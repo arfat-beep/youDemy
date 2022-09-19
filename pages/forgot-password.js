@@ -31,6 +31,8 @@ const ForgotPassword = () => {
     try {
       setLoading(true);
       const { data } = await axios.post("/api/forgot-password", { email });
+      setLoading(false);
+      data.ok && toast("Check your email for the secret code");
     } catch (e) {
       console.log("Error from forget password handleSubmit", e);
       setLoading(false);
@@ -52,12 +54,14 @@ const ForgotPassword = () => {
             required
           />
           <br />
-          <button
-            className="btn btn-primary btn-block p-2"
-            disabled={loading || !email}
-          >
-            {loading ? <SyncOutlined spin /> : "Submit"}
-          </button>
+          <div class="d-grid gap-2">
+            <button
+              className="btn btn-primary btn-block p-2"
+              disabled={loading || !email}
+            >
+              {loading ? <SyncOutlined spin /> : "Submit"}
+            </button>
+          </div>
         </form>
       </div>
     </>
