@@ -7,9 +7,8 @@ import { SyncOutlined } from "@ant-design/icons";
 import { Context } from "../context";
 const login = () => {
   // useState hooks
-  const [name, setName] = useState("arfat");
-  const [email, setEmail] = useState("rahmnaasdfasdf@gmail.com");
-  const [password, setPassword] = useState("asdfasd");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   // state
@@ -26,7 +25,7 @@ const login = () => {
   useEffect(() => {
     if (user !== null) {
       router.push("/");
-      toast("You are already logged in");
+      toast.success("You are logged in");
     }
   }, [user]);
 

@@ -6,9 +6,9 @@ import { SyncOutlined } from "@ant-design/icons";
 import { Context } from "../context";
 import { useRouter } from "next/router";
 const register = () => {
-  const [name, setName] = useState("arfat");
-  const [email, setEmail] = useState("rahmnaasdfasdf@gmail.com");
-  const [password, setPassword] = useState("asdfasd");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   // state
@@ -24,7 +24,7 @@ const register = () => {
   useEffect(() => {
     if (user !== null) {
       router.push("/");
-      toast("You are already logged in");
+      toast.warn("You are already logged in");
     }
   }, [user]);
 
@@ -37,8 +37,10 @@ const register = () => {
         email,
         password,
       });
-      console.log(data);
       toast.success("Registration successfull. Please login");
+      setEmail("");
+      setPassword("");
+      setName("");
       setLoading(false);
     } catch (err) {
       toast.error(err.response.data);
