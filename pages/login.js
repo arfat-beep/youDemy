@@ -7,8 +7,8 @@ import { SyncOutlined } from "@ant-design/icons";
 import { Context } from "../context";
 const login = () => {
   // useState hooks
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("arfatrahman08@gmail.com");
+  const [password, setPassword] = useState("arfatrahman");
   const [loading, setLoading] = useState(false);
 
   // state
@@ -46,9 +46,8 @@ const login = () => {
 
       // save login data to local storage
       window.localStorage.setItem("user", JSON.stringify(data));
-
       // after login redirect to home page using router from nextjs
-      router.push("/");
+      router.push("/user");
 
       setLoading(false);
     } catch (err) {

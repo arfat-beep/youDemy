@@ -10,9 +10,11 @@ const UserIndex = () => {
   return (
     <>
       <UserRoutes>
-        <h1 className="jumbotron text-center">
-          <pre>{JSON.stringify(user, null, 4)}</pre>
-        </h1>
+        {user && (
+          <h1 className="jumbotron text-center">
+            {user.name.toUpperCase()}'S DASHBOARD
+          </h1>
+        )}
       </UserRoutes>
     </>
   );

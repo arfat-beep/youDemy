@@ -7,6 +7,8 @@ import {
   AppstoreAddOutlined,
   LogoutOutlined,
   CoffeeOutlined,
+  CarryOutOutlined,
+  TeamOutlined,
 } from "@ant-design/icons";
 import { Context } from "../context";
 import axios from "axios";
@@ -65,6 +67,22 @@ const TopNav = () => {
           </Item>
         </>
       )}
+
+      {user && user.role && user.role.includes("Instructor") ? (
+        <Item icon={<CarryOutOutlined />} key={"/instructor/course/create"}>
+          <Link href={"/instructor/course/create"}>
+            <a>Create Course</a>
+          </Link>
+        </Item>
+      ) : (
+        <Item icon={<TeamOutlined />} key={"/user/become-instructor"}>
+          <Link href={"/user/become-instructor"}>
+            <a>Become Instructor</a>
+          </Link>
+        </Item>
+      )}
+
+      {/* if user exist show user name with submenu */}
       {user !== null && (
         <SubMenu
           style={{ marginLeft: "auto" }}

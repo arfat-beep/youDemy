@@ -2,6 +2,7 @@ import { SyncOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import UserNav from "../nav/UserNav";
 const UserRoutes = ({ children }) => {
   // state
   const [ok, setOk] = useState(false);
@@ -33,7 +34,14 @@ const UserRoutes = ({ children }) => {
           className="d-flex justify-content-center display-1 text-primary p-5"
         />
       ) : (
-        children
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-md-2">
+              <UserNav />
+            </div>
+            <div className="col-md-10">{children}</div>
+          </div>
+        </div>
       )}
     </>
   );

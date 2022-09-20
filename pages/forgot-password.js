@@ -24,7 +24,7 @@ const ForgotPassword = () => {
   //   redirect if user is logged in
   useEffect(() => {
     if (user !== null) router.push("/");
-  }, []);
+  }, [user]);
 
   // a function to send email and receive temp pass to that mail
   const handleSubmit = async (e) => {
@@ -55,6 +55,7 @@ const ForgotPassword = () => {
     setNewPassword("");
     setLoading(false);
     data.ok && toast("Great! Now you can login with your new password");
+    router.push("/login");
 
     try {
     } catch (err) {
