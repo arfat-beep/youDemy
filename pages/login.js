@@ -7,8 +7,8 @@ import { SyncOutlined } from "@ant-design/icons";
 import { Context } from "../context";
 const login = () => {
   // useState hooks
-  const [email, setEmail] = useState("arfatrahman08@gmail.com");
-  const [password, setPassword] = useState("arfatrahman");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   // state
