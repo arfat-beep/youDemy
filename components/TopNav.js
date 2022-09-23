@@ -69,11 +69,18 @@ const TopNav = () => {
       )}
 
       {user && user.role && user.role.includes("Instructor") ? (
-        <Item icon={<CarryOutOutlined />} key={"/instructor/course/create"}>
-          <Link href={"/instructor/course/create"}>
-            <a>Create Course</a>
-          </Link>
-        </Item>
+        <>
+          <Item icon={<CarryOutOutlined />} key={"/instructor/course/create"}>
+            <Link href={"/instructor/course/create"}>
+              <a>Create Course</a>
+            </Link>
+          </Item>
+          <Item icon={<TeamOutlined />} key={"/instructor"}>
+            <Link href={"/instructor"}>
+              <a>Instructor</a>
+            </Link>
+          </Item>
+        </>
       ) : (
         <Item icon={<TeamOutlined />} key={"/user/become-instructor"}>
           <Link href={"/user/become-instructor"}>

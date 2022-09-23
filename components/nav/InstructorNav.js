@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-const UserNav = () => {
+const InstructorNav = () => {
   const [current, setCurrent] = useState("");
   useEffect(() => {
     process.browser && setCurrent(window.location.pathname);
@@ -9,13 +9,22 @@ const UserNav = () => {
 
   return (
     <div className="nav flex-column nav-pills mt-2">
-      <Link href={"/user"}>
+      <Link href={"/instructor"}>
         <a className={`nav-link ${current === "/instructor" && "active"}`}>
           Dashboard
+        </a>
+      </Link>
+      <Link href={"/instructor/course/create"}>
+        <a
+          className={`nav-link ${
+            current === "/instructor/course/create" && "active"
+          }`}
+        >
+          Crouse Create
         </a>
       </Link>
     </div>
   );
 };
 
-export default UserNav;
+export default InstructorNav;
