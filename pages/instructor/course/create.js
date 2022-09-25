@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import InstructorRoute from "../../../components/routes/InstructorRoute";
-import { Button, Select } from "antd";
 import CourseCreateForm from "../../../components/forms/CourseCreateForm";
-const { Option } = Select;
+import Resizer from "react-image-file-resizer";
+import axios from "axios";
+import { toast } from "react-toastify";
+
 const CourseCreate = () => {
   // state
   const [values, setValues] = useState({
@@ -13,20 +15,41 @@ const CourseCreate = () => {
     category: "",
     paid: true,
     loading: false,
-    imagePreview: "",
   });
+
+  const [image, setImage] = useState("");
+  const [preview, setPreview] = useState("");
+  const [uploadButtonText, setUploadButtonText] = useState("");
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleImage = () => {
-    //
+  const handleImage = (e) => {
+    let file = e.target.files[0];
+    setPreview(window.URL.createObjectURL(file));
+    setUploadButtonText(file.name);
+    setValues({ ...values, loading: true });
+
+    // resize
+    Resizer.imageFileResizer(file, 720, 500, "JPEG", 100, 0, async (uri) => {
+      try {
+        let { data } = await axios.post("/api/course/upload-image", {
+          image: url,
+        });
+        console.log("Image uploaded", data);
+        setValues({ ...values, loading: false });
+        toast.success("Image uploaded");
+      } catch (e) {
+        console.log("Error from handleImage => Resizer try catch : ", e);
+        setValues({ ...values, loading: false });
+        toast.error("Image upload failed. Try later");
+      }
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
   };
 
   return (
@@ -39,6 +62,8 @@ const CourseCreate = () => {
           handleChange={handleChange}
           values={values}
           setValues={setValues}
+          preview={preview}
+          uploadButtonText={uploadButtonText}
         />
       </div>
       <pre>{JSON.stringify(values, null, 4)}</pre>
