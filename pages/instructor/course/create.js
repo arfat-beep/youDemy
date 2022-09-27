@@ -17,9 +17,9 @@ const CourseCreate = () => {
     loading: false,
   });
 
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState({});
   const [preview, setPreview] = useState("");
-  const [uploadButtonText, setUploadButtonText] = useState("");
+  const [uploadButtonText, setUploadButtonText] = useState("Upload image");
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -30,14 +30,18 @@ const CourseCreate = () => {
     setPreview(window.URL.createObjectURL(file));
     setUploadButtonText(file.name);
     setValues({ ...values, loading: true });
-
+    // console.log(e);
     // resize
     Resizer.imageFileResizer(file, 720, 500, "JPEG", 100, 0, async (uri) => {
       try {
         let { data } = await axios.post("/api/course/upload-image", {
-          image: url,
+          image: uri,
         });
         console.log("Image uploaded", data);
+
+        // set image in the state
+        setImage(data);
+
         setValues({ ...values, loading: false });
         toast.success("Image uploaded");
       } catch (e) {
@@ -52,6 +56,21 @@ const CourseCreate = () => {
     e.preventDefault();
   };
 
+  // Remove selected image also form S3
+  const handleImageRemove = async () => {
+    try {
+      setValues({ ...values, loading: true });
+      const res = await axios.post("/api/course/remove-image", { image });
+      setImage({});
+      setPreview("");
+      setUploadButtonText("Upload Image");
+      setValues({ ...values, loading: false });
+    } catch (e) {
+      console.log("Error from handleImageRemove catch =>", e);
+      toast.error("Failed to remove image");
+      setValues({ ...values, loading: false });
+    }
+  };
   return (
     <InstructorRoute>
       <h1 className="jumbotron bg-primary text-center">Create Course</h1>
@@ -64,9 +83,12 @@ const CourseCreate = () => {
           setValues={setValues}
           preview={preview}
           uploadButtonText={uploadButtonText}
+          handleImageRemove={handleImageRemove}
         />
       </div>
       <pre>{JSON.stringify(values, null, 4)}</pre>
+      <hr />
+      <pre>{JSON.stringify(image, null, 4)}</pre>
     </InstructorRoute>
   );
 };

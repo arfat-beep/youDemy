@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Select, Button, Avatar } from "antd";
+import React from "react";
+import { Select, Button, Avatar, Badge } from "antd";
 
 const { Option } = Select;
 
@@ -11,12 +11,14 @@ const CourseCreateForm = ({
   setValues,
   preview,
   uploadButtonText,
+  handleImageRemove,
 }) => {
   const children = [];
   for (let i = 9.99; i <= 100.99; i++) {
     children.push(<Option key={i.toFixed(2)}>$ {i.toFixed(2)}</Option>);
   }
   ``;
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -86,7 +88,7 @@ const CourseCreateForm = ({
             <div className="form-group">
               <div class="d-grid gap-2">
                 <label className="btn btn-outline-secondary btn-block text-left">
-                  {uploadButtonText ? uploadButtonText : "Upload image"}
+                  {uploadButtonText}
                   <input
                     type="file"
                     name="image"
@@ -101,7 +103,9 @@ const CourseCreateForm = ({
           </div>
           {preview && (
             <div className="col-md-6">
-              <Avatar size={200} shape="square" src={preview} />
+              <Badge count="X" onClick={handleImageRemove} className="pointer">
+                <Avatar size={200} shape="square" src={preview} />
+              </Badge>
             </div>
           )}
         </div>
