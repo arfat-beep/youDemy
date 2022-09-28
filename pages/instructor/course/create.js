@@ -4,6 +4,7 @@ import CourseCreateForm from "../../../components/forms/CourseCreateForm";
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Router, { useRouter } from "next/router";
 
 const CourseCreate = () => {
   // state
@@ -16,6 +17,9 @@ const CourseCreate = () => {
     paid: true,
     loading: false,
   });
+
+  // router
+  const router = useRouter();
 
   const [image, setImage] = useState({});
   const [preview, setPreview] = useState("");
@@ -37,7 +41,7 @@ const CourseCreate = () => {
         let { data } = await axios.post("/api/course/upload-image", {
           image: uri,
         });
-        console.log("Image uploaded", data);
+        // console.log("Image uploaded", data);
 
         // set image in the state
         setImage(data);
@@ -52,8 +56,18 @@ const CourseCreate = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const { data } = await axios.post("/api/course", {
+        ...values,
+        image,
+      });
+      toast.success("Great! Now you can adding lessons");
+      router.push("/instructor");
+    } catch (e) {
+      toast.error(e.response.data);
+    }
   };
 
   // Remove selected image also form S3
@@ -65,6 +79,7 @@ const CourseCreate = () => {
       setPreview("");
       setUploadButtonText("Upload Image");
       setValues({ ...values, loading: false });
+      toast.success("Image is removed");
     } catch (e) {
       console.log("Error from handleImageRemove catch =>", e);
       toast.error("Failed to remove image");
