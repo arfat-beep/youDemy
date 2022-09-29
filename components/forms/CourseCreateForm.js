@@ -50,7 +50,7 @@ const CourseCreateForm = ({
                 style={{ width: "100%" }}
                 size="large"
                 value={values.paid}
-                onChange={(v) => setValues({ ...values, paid: !values.paid })}
+                onChange={(v) => setValues({ ...values, paid: v, price: 0 })}
               >
                 <Option value={true}>Paid</Option>
                 <Option value={false}>Free</Option>
@@ -86,7 +86,7 @@ const CourseCreateForm = ({
         <div className="row pt-3">
           <div className="col">
             <div className="form-group">
-              <div class="d-grid gap-2">
+              <div className="d-grid gap-2">
                 <label className="btn btn-outline-secondary btn-block text-left">
                   {uploadButtonText}
                   <input

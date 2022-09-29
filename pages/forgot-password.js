@@ -101,7 +101,7 @@ const ForgotPassword = () => {
               />
             </>
           )}
-          <div class="d-grid gap-2">
+          <div className="d-grid gap-2">
             <button
               className="btn btn-primary btn-block p-2"
               disabled={loading || !email}
