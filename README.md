@@ -7,3 +7,4 @@
 - http-proxy-middleware
 - express
 - react-image-file-resizer
+- react-markdown (rich text)
