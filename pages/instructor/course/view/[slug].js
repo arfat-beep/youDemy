@@ -3,7 +3,14 @@ import { useRouter } from "next/router";
 import { Avatar, Button, List, Modal, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import InstructorRoute from "../../../../components/routes/InstructorRoute";
-import { CheckOutlined, EditOutlined, UploadOutlined } from "@ant-design/icons";
+import {
+  CheckOutlined,
+  CloseOutlined,
+  EditOutlined,
+  QuestionCircleFilled,
+  QuestionOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
 import ReactMarkdown from "react-markdown";
 import AddLessonForm from "../../../../components/forms/AddLessonForm";
 import { toast } from "react-toastify";
@@ -98,6 +105,14 @@ const CourseView = () => {
     }
   };
 
+  // publish and unpublish course 
+  const handlePublish = (e, courseId) =>{
+    //
+  }
+  const handleUnpublish = (e, courseId) =>{
+    //
+  }
+
   return (
     <InstructorRoute>
       <div className="container-fluid pt-3">
@@ -130,12 +145,28 @@ const CourseView = () => {
                           className="h5 text-warning me-4"
                         />
                       </Tooltip>
-                      <Tooltip title="Publish">
-                        <CheckOutlined
-                          className="h5 text-danger"
-                          style={{ cursor: "pointer" }}
-                        />
-                      </Tooltip>
+
+                      {course?.lessons?.length < 5 ? (
+                        <Tooltip title="Min 5 lessons required to published">
+                          <QuestionOutlined className="h5 pointer text-danger" />
+                        </Tooltip>
+                      ) : course?.published ? (
+                        <Tooltip title="Unpublish">
+                          <CloseOutlined
+                            className="h5 text-danger"
+                            style={{ cursor: "pointer" }}
+                            onClick={(e) => handleUnpublish(e, course._id)}
+                          />
+                        </Tooltip>
+                      ) : (
+                        <Tooltip title="Publish">
+                          <CheckOutlined
+                            className="h5 text-success"
+                            style={{ cursor: "pointer" }}
+                            onClick={(e) => handlePublish(e, course._id)}
+                          />
+                        </Tooltip>
+                      )}
                     </div>
                   </div>
                 </div>
