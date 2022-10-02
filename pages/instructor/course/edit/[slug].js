@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import Item from "antd/lib/list/Item";
 import { Avatar, List } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 
 const CourseEdit = () => {
   // state
@@ -129,6 +130,19 @@ const CourseEdit = () => {
   };
   // values?.lessons && console.log(values?.lessons?.length);
 
+  // delete lesson from all lessons list
+  const handleDelete = async (index) => {
+    const answer = window.confirm("Are you sure you want to delete");
+    if (!answer) return;
+
+    let allLessons = values.lessons;
+    const removed = allLessons.splice(index, 1);
+    setValues({ ...values, lessons: allLessons });
+
+    // send request to server
+    const { data } = await axios.put(`/api/course/${removed[0]._id}`);
+  };
+
   return (
     <InstructorRoute>
       <h1 className="jumbotron bg-primary text-center">Edit Course</h1>
@@ -146,26 +160,33 @@ const CourseEdit = () => {
         />
       </div>
       <hr />
-      <div className="row pb-5">
-        <div className="col lesson-list">
-          <h4>{lessonsLength} Lessons</h4>
-          <List
-            onDragOver={(e) => e.preventDefault()}
-            itemLayout="horizontal"
-            dataSource={values && values.lessons}
-            renderItem={(item, index) => (
-              <Item
-                draggable
-                onDragStart={(e) => handleDrag(e, index)}
-                onDrop={(e) => handleDrop(e, index)}
-              >
-                <Item.Meta
-                  avatar={<Avatar>{index + 1}</Avatar>}
-                  title={item.title}
-                ></Item.Meta>
-              </Item>
-            )}
-          ></List>
+      <div className="container-fluid">
+        <div className="row pb-5">
+          <div className="col lesson-list">
+            <h4>{lessonsLength} Lessons</h4>
+            <List
+              onDragOver={(e) => e.preventDefault()}
+              itemLayout="horizontal"
+              dataSource={values && values.lessons}
+              renderItem={(item, index) => (
+                <Item
+                  draggable
+                  onDragStart={(e) => handleDrag(e, index)}
+                  onDrop={(e) => handleDrop(e, index)}
+                >
+                  <Item.Meta
+                    avatar={<Avatar>{index + 1}</Avatar>}
+                    title={item.title}
+                  ></Item.Meta>
+                  <DeleteOutlined
+                    onClick={() => handleDelete(index)}
+                    className="text-danger float-right"
+                    style={{ cursor: "pointer" }}
+                  />
+                </Item>
+              )}
+            ></List>
+          </div>
         </div>
       </div>
       {/* <pre>{JSON.stringify(values, null, 4)}</pre>
