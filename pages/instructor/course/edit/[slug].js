@@ -167,7 +167,6 @@ const CourseEdit = () => {
 
     // upload new video
     const file = e.target.files[0];
-    console.log(file.name);
     setUploadVideoButtonText(file.name);
     setUploading(true);
 
@@ -186,10 +185,27 @@ const CourseEdit = () => {
       }
     );
     setCurrent({ ...current, video: data });
+
+    setUploadVideoButtonText(`New uploaded file name is :  ${file?.name}`);
     setUploading(false);
   };
-  const handleUpdateLesson = () => {
-    console.log("handle lessosn");
+  const handleUpdateLesson = async (e) => {
+    e.preventDefault();
+    const { data } = await axios.put(
+      `/api/course/lesson/${slug}/${current._id}`,
+      current
+    );
+    setUploadButtonText("upload video");
+    setVisible(false);
+
+    // update ui
+    if (data.ok) {
+      let arr = values.lessons;
+      const index = arr.findIndex((el) => el._id === current._id);
+      arr[index] = current;
+      setValues({ ...values, lessons: arr });
+      toast.success("Lesson updated");
+    }
   };
 
   return (
