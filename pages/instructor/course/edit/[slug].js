@@ -6,8 +6,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import Item from "antd/lib/list/Item";
-import { Avatar, List } from "antd";
+import { Avatar, List, Modal } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
+import UpdateLessonForm from "../../../../components/forms/UpdateLessonForm";
 
 const CourseEdit = () => {
   // state
@@ -26,6 +27,14 @@ const CourseEdit = () => {
   const [preview, setPreview] = useState("");
   const [uploadButtonText, setUploadButtonText] = useState("Upload image");
   const [lessonsLength, setLessonsLength] = useState(0);
+
+  // statte for lessons update
+  const [visible, setVisible] = useState(false);
+  const [current, setCurrent] = useState({});
+  const [uploadVideoButtonText, setUploadVideoButtonText] =
+    useState("Upload Video");
+  const [progress, setProgress] = useState(0);
+  const [uploading, setUploading] = useState(false);
 
   // router
   const router = useRouter();
@@ -104,6 +113,8 @@ const CourseEdit = () => {
       setValues({ ...values, loading: false });
     }
   };
+
+  // handle drag and drop lessons
   const handleDrag = (e, index) => {
     // console.log("On drag", index);
     e.dataTransfer.setData("itemIndex", index);
@@ -128,7 +139,6 @@ const CourseEdit = () => {
     console.log("Lessons rearrange =>", data);
     toast.success("Lessons rearrange successfull");
   };
-  // values?.lessons && console.log(values?.lessons?.length);
 
   // delete lesson from all lessons list
   const handleDelete = async (index) => {
@@ -140,7 +150,16 @@ const CourseEdit = () => {
     setValues({ ...values, lessons: allLessons });
 
     // send request to server
-    const { data } = await axios.put(`/api/course/${removed[0]._id}`);
+    const { data } = await axios.put(`/api/course/${slug}/${removed[0]._id}`);
+    console.log("handleDelete", data);
+  };
+
+  // Lesson update functions
+  const handleVideo = () => {
+    console.log("Handle video");
+  };
+  const handleUpdateLesson = () => {
+    console.log("handle lessosn");
   };
 
   return (
@@ -175,6 +194,10 @@ const CourseEdit = () => {
                   onDrop={(e) => handleDrop(e, index)}
                 >
                   <Item.Meta
+                    onClick={() => {
+                      setVisible(true);
+                      setCurrent(item);
+                    }}
                     avatar={<Avatar>{index + 1}</Avatar>}
                     title={item.title}
                   ></Item.Meta>
@@ -189,6 +212,26 @@ const CourseEdit = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        title="update lesson"
+        centered
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        footer={null}
+      >
+        <UpdateLessonForm
+          current={current}
+          setCurrent={setCurrent}
+          handleVideo={handleVideo}
+          handleUpdateLesson={handleUpdateLesson}
+          uploadVideoButtonText={uploadVideoButtonText}
+          progress={progress}
+          uploading={uploading}
+        />
+        {/* <pre>{JSON.stringify(current, null, 4)}</pre> */}
+      </Modal>
+
       {/* <pre>{JSON.stringify(values, null, 4)}</pre>
       <hr />
       <pre>{JSON.stringify(image, null, 4)}</pre> */}
