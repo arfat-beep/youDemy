@@ -105,13 +105,35 @@ const CourseView = () => {
     }
   };
 
-  // publish and unpublish course 
-  const handlePublish = (e, courseId) =>{
-    //
-  }
-  const handleUnpublish = (e, courseId) =>{
-    //
-  }
+  // publish and unpublish course
+  const handlePublish = async (e, courseId) => {
+    try {
+      let answer = window.confirm(
+        "Once you publish your course, it will be live in the marketplace for users to enroll"
+      );
+      if (!answer) return;
+      const { data } = await axios.put(`/api/course/publish/${courseId}`);
+      setCourse(data);
+      toast.success("Congrats! your course is published");
+    } catch (e) {
+      console.log("error from handlePublish", e);
+
+      toast.error("Course published failed");
+    }
+  };
+  const handleUnpublish = async (e, courseId) => {
+    try {
+      let answer = window.confirm(
+        "Once you unpublish your course, it will no longer be abailable for users to enroll"
+      );
+      if (!answer) return;
+      const { data } = await axios.put(`/api/course/unpublish/${courseId}`);
+      setCourse(data);
+      toast.success("Your course is unpublished");
+    } catch (e) {
+      toast.error("Course unpublished failed");
+    }
+  };
 
   return (
     <InstructorRoute>
