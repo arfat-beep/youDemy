@@ -49,6 +49,8 @@ const CourseView = () => {
         values
       );
       setValues({ ...values, title: "", content: "", video: {} });
+      setProgress(0);
+
       setVisible(false);
       setUploadButtonText("Upload video");
       setCourse(data);

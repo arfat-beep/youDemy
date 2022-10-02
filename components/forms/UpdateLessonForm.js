@@ -24,7 +24,7 @@ const UpdateLessonForm = ({
           required
         />
         <textarea
-          onChange={(e) => setValues({ ...current, content: e.target.value })}
+          onChange={(e) => setCurrent({ ...current, content: e.target.value })}
           cols="7"
           rows="7"
           value={current.content}
