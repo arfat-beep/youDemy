@@ -4,7 +4,8 @@ import CourseCreateForm from "../../../components/forms/CourseCreateForm";
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import { toast } from "react-toastify";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
+
 
 const CourseCreate = () => {
   // state
