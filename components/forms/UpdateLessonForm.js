@@ -9,6 +9,7 @@ const UpdateLessonForm = ({
   uploadVideoButtonText,
   progress,
   uploading,
+  handleVideo,
 }) => {
   return (
     <div className="container pt-3">
@@ -44,7 +45,12 @@ const UpdateLessonForm = ({
             )}
             <label className=" col btn btn-dark btn-block text-left mt-3">
               {uploadVideoButtonText}
-              <input type="file" accept="video/*" hidden />
+              <input
+                type="file"
+                accept="video/*"
+                onChange={handleVideo}
+                hidden
+              />
             </label>
           </div>
         </div>
