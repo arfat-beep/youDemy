@@ -1,7 +1,7 @@
 import { CloseCircleFilled } from "@ant-design/icons";
-import { Button, Progress, Tooltip } from "antd";
+import { Button, Progress, Switch, Tooltip } from "antd";
 import React from "react";
-
+import ReactPlayer from "react-player";
 const UpdateLessonForm = ({
   current,
   setCurrent,
@@ -12,6 +12,7 @@ const UpdateLessonForm = ({
 }) => {
   return (
     <div className="container pt-3">
+      {/* <pre>{JSON.stringify(current, null, 4)}</pre> */}
       <form onSubmit={handleUpdateLesson}>
         <input
           type="text"
@@ -31,15 +32,20 @@ const UpdateLessonForm = ({
 
         <div className="container-fluid justify-content-center">
           <div class="row">
+            {!uploading && current.video && current.video.Location && (
+              <div className="pt-2 d-flex justify-content-center">
+                <ReactPlayer
+                  url={current.video.Location}
+                  width="410px"
+                  height={"240"}
+                  controls
+                />
+              </div>
+            )}
             <label className=" col btn btn-dark btn-block text-left mt-3">
               {uploadVideoButtonText}
               <input type="file" accept="video/*" hidden />
             </label>
-            {!uploading && current.video && current.video.Location && (
-              <div className="pt-2 d-flex justify-content-center">
-                Show video player on react player
-              </div>
-            )}
           </div>
         </div>
         <div className="d-grid">
@@ -55,7 +61,16 @@ const UpdateLessonForm = ({
           )}
         </div>
         <div className="d-flex justify-content-between">
-          <div className="pt-3 badge text-primary">Preview</div>
+          <span className="pt-3 badge " style={{ color: "black" }}>
+            Preview
+          </span>
+          <Switch
+            className="float-right mt-2"
+            disabled={uploading}
+            defaultChecked={current.free_preview}
+            name="free_preview"
+            onChange={(v) => setCurrent({ ...current, free_preview: v })}
+          />
         </div>
         <div className="d-grid">
           <Button
