@@ -1,6 +1,7 @@
 import React from "react";
 import { Badge, Card } from "antd";
 import Link from "next/link";
+import { currencyFormatter } from "../../utils/helpers";
 const { Meta } = Card;
 const CourseCard = ({ course }) => {
   const { name, instructor, price, image, slug, paid, category } = course;
@@ -21,7 +22,14 @@ const CourseCard = ({ course }) => {
           <h2 className="font-weight-bold">{name}</h2>
           <p>by {instructor.name}</p>
           <Badge count={category} className="pb-2 me-2" />
-          <h4 className="pt-2">{paid ? price : "free"}</h4>
+          <h4 className="pt-2">
+            {paid
+              ? currencyFormatter({
+                  amount: price,
+                  currency: "bdt",
+                })
+              : "free"}
+          </h4>
         </Card>
       </a>
     </Link>
