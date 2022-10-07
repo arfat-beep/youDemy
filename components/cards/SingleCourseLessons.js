@@ -23,7 +23,20 @@ const SingleCourseLessons = ({
                   <Item.Meta
                     avatar={<Avatar>{index + 1}</Avatar>}
                     title={item.title}
-                  ></Item.Meta>
+                  />
+                  {item.video && item.video !== null && item.free_preview && (
+                    <span
+                      onClick={() => {
+                        setPreview(item?.video?.Location);
+                        setShowModal(!showModal);
+                        console.log("arfat");
+                      }}
+                      style={{ cursor: "pointer" }}
+                      className="text-primary"
+                    >
+                      Preview
+                    </span>
+                  )}
                 </Item>
               )}
             />
