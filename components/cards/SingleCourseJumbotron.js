@@ -1,19 +1,28 @@
-import { Badge } from "antd";
+import { Badge, Button } from "antd";
 import React from "react";
 // import ReactPlayer from "react-player";
 import dynamic from "next/dynamic";
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
-
 import Image from "next/image";
 import { currencyFormatter } from "../../utils/helpers";
+import {
+  LoadingOutlined,
+  SafetyCertificateFilled,
+  SafetyOutlined,
+} from "@ant-design/icons";
 
 const SingleCourseJumbotron = ({
   course,
+  user,
+  loading,
+  handleFreeEnrollment,
+  handlePaidEnrollment,
   setPreview,
   preview,
   setShowModal,
   showModal,
 }) => {
+  // destructure course
   const {
     name,
     description,
@@ -72,7 +81,7 @@ const SingleCourseJumbotron = ({
                     </div>
                   ) : (
                     <>
-                      <img
+                      <Image
                         alt={name}
                         className="img img-fluid"
                         src={image?.Location}
@@ -89,6 +98,27 @@ const SingleCourseJumbotron = ({
                   )}
 
                   {/* enroll button  */}
+
+                  {loading ? (
+                    <div className="d-flex justify-content-center">
+                      <LoadingOutlined className="h1 text-danger" />
+                    </div>
+                  ) : (
+                    <Button
+                      className="my-3"
+                      type="danger"
+                      block
+                      shape="round"
+                      icon={<SafetyOutlined />}
+                      size="large"
+                      disabled={loading}
+                      onClick={
+                        paid ? handlePaidEnrollment : handleFreeEnrollment
+                      }
+                    >
+                      {user ? "Enroll" : "Login to enroll"}
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
