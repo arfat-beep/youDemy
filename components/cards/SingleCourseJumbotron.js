@@ -93,7 +93,6 @@ const SingleCourseJumbotron = ({
               </div>
             </div>
           </div>
-          <pre> {JSON.stringify(course, null, 4)} </pre>
         </div>
       </div>
     </>
