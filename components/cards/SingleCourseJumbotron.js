@@ -1,6 +1,8 @@
 import { Badge } from "antd";
 import React from "react";
-import ReactPlayer from "react-player";
+// import ReactPlayer from "react-player";
+import dynamic from "next/dynamic";
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
 import Image from "next/image";
 import { currencyFormatter } from "../../utils/helpers";
@@ -70,7 +72,7 @@ const SingleCourseJumbotron = ({
                     </div>
                   ) : (
                     <>
-                      <Image
+                      <img
                         alt={name}
                         className="img img-fluid"
                         src={image?.Location}

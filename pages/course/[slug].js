@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-// import ReactPlayer from "react-player";
-import dynamic from "next/dynamic";
 import SingleCourseJumbotron from "../../components/cards/SingleCourseJumbotron";
-const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
+import PreviewModal from "../../components/modal/PreviewModal";
 
 const SingleCourse = ({ course }) => {
   // state
@@ -25,9 +23,12 @@ const SingleCourse = ({ course }) => {
         preview={preview}
         setPreview={setPreview}
       />
-      {/* {
-        showModal ? course.lessons[0].video.Location : 
-      } */}
+
+      <PreviewModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        preview={preview}
+      />
     </>
   );
 };
