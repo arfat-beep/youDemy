@@ -21,6 +21,8 @@ const SingleCourseJumbotron = ({
   preview,
   setShowModal,
   showModal,
+  setEnrolled,
+  enrolled,
 }) => {
   // destructure course
   const {
@@ -116,7 +118,11 @@ const SingleCourseJumbotron = ({
                         paid ? handlePaidEnrollment : handleFreeEnrollment
                       }
                     >
-                      {user ? "Enroll" : "Login to enroll"}
+                      {user
+                        ? enrolled.status
+                          ? "Go to course"
+                          : "Enroll"
+                        : "Login to enroll"}
                     </Button>
                   )}
                 </div>
