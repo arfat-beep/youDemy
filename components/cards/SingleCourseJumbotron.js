@@ -60,7 +60,7 @@ const SingleCourseJumbotron = ({
                   <p>Last updated {new Date(updatedAt).toLocaleDateString()}</p>
                   <h4 className="text-light">
                     {paid
-                      ? currencyFormatter({ amount: price, currency: "bdt" })
+                      ? currencyFormatter({ amount: price, currency: "usd" })
                       : "Free"}
                   </h4>
                 </div>
@@ -100,7 +100,6 @@ const SingleCourseJumbotron = ({
                   )}
 
                   {/* enroll button  */}
-
                   {loading ? (
                     <div className="d-flex justify-content-center">
                       <LoadingOutlined className="h1 text-danger" />

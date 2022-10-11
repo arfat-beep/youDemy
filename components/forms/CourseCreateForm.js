@@ -17,8 +17,7 @@ const CourseCreateForm = ({
   const children = [];
   for (let i = 9.99; i <= 100.99; i++) {
     children.push(<Option key={i.toFixed(2)}>$ {i.toFixed(2)}</Option>);
-  }
-  ``;
+  };
 
   return (
     <>

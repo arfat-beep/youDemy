@@ -6,6 +6,7 @@ import PreviewModal from "../../components/modal/PreviewModal";
 import SingleCourseLessons from "../../components/cards/SingleCourseLessons";
 import { Context } from "../../context";
 import { toast } from "react-toastify";
+import { loadStripe } from "@stripe/stripe-js";
 const SingleCourse = ({ course }) => {
   // state
   const [showModal, setShowModal] = useState(false);
@@ -23,7 +24,7 @@ const SingleCourse = ({ course }) => {
   }, [user, course]);
   const checkEnrollment = async () => {
     const { data } = await axios.get(`/api/check-entrollment/${course._id}`);
-    console.log("Check enroll", data);
+    // console.log("Check enroll", data);
     setEnrolled(data);
   };
 
@@ -31,9 +32,32 @@ const SingleCourse = ({ course }) => {
   const router = useRouter();
   const { slug } = router.query;
 
-  const handlePaidEnrollment = () => {
-    console.log("paid enrollment");
+  const handlePaidEnrollment = async () => {
+    // console.log("paid enrollment");
+    try {
+      setLoading(true);
+
+      // check if user is logged in or not
+      if (!user) router.push("/login");
+
+      //check if already enrolled
+      if (enrolled.status)
+        return router.push(`/user/course/${enrolled.course.slug}`);
+
+      const { data } = await axios.post(`/api/paid-enrollment/${course._id}`);
+      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
+      stripe.redirectToCheckout({ sessionId: data });
+      console.log("data from paid enrollment ", data);
+    } catch (e) {
+      toast.error("Entrollment failed. Try again");
+      console.log(
+        "Error from client/pages/course/slug/handlePaidEnrollment =>",
+        e
+      );
+      setLoading(false);
+    }
   };
+
   const handleFreeEnrollment = async (e) => {
     e.preventDefault();
     try {
@@ -49,7 +73,7 @@ const SingleCourse = ({ course }) => {
       console.log("freeEnrollment", data);
       setLoading(false);
       toast.success(data.message);
-      router.push(`/user/course/${data  .course.slug}`);
+      router.push(`/user/course/${data.course.slug}`);
     } catch (e) {
       toast.error("Enrollment failed");
       console.log("Error from free enrollment", e);

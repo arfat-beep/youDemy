@@ -8,3 +8,4 @@
 - express
 - react-image-file-resizer
 - react-markdown (rich text)
+- @stripe/stripe-js

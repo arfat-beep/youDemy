@@ -3,7 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import UserNav from "../nav/UserNav";
-const UserRoutes = ({ children }) => {
+const UserRoutes = ({ children, showNav = true }) => {
   // state
   const [ok, setOk] = useState(false);
 
@@ -36,9 +36,7 @@ const UserRoutes = ({ children }) => {
       ) : (
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-2">
-              <UserNav />
-            </div>
+            <div className="col-md-2">{showNav && <UserNav />}</div>
             <div className="col-md-10">{children}</div>
           </div>
         </div>

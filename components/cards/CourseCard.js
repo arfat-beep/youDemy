@@ -26,7 +26,7 @@ const CourseCard = ({ course }) => {
             {paid
               ? currencyFormatter({
                   amount: price,
-                  currency: "bdt",
+                  currency: "usd",
                 })
               : "free"}
           </h4>
