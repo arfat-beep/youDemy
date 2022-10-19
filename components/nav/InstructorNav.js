@@ -23,6 +23,15 @@ const InstructorNav = () => {
           Crouse Create
         </a>
       </Link>
+      <Link href={"/instructor/revenue"}>
+        <a
+          className={`nav-link ${
+            current === "/instructor/revenue" && "active"
+          }`}
+        >
+          Revenue
+        </a>
+      </Link>
     </div>
   );
 };

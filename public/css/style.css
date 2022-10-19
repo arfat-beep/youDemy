@@ -9,3 +9,10 @@
 .pointer {
   cursor: pointer;
 }
+.hover-spin {
+  transition: all 0.2s ease-in;
+  transform: rotate(0deg);
+}
+.hover-spin:hover {
+  transform: rotate(90deg);
+}

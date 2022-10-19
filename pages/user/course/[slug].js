@@ -104,7 +104,10 @@ const SingleCourse = () => {
                 key={index}
                 icon={<Avatar>{index + 1}</Avatar>}
               >
-                {lesson.title.substring(0, 30)}
+                {/* {lesson.title.substring(0, 20)} */}
+                {lesson?.title.length > 25
+                  ? `${lesson.title.substring(0, 25)}...`
+                  : lesson.title}
                 {completedLessons.includes(lesson._id) ? (
                   <CheckCircleFilled
                     className="ms-2 float-end text-primary"
