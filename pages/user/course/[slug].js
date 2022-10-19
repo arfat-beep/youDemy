@@ -7,8 +7,10 @@ import dynamic from "next/dynamic";
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 import ReactMarkdown from "react-markdown";
 import {
+  CheckCircleFilled,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  MinusCircleFilled,
   PlayCircleOutlined,
 } from "@ant-design/icons";
 const { Item } = Menu;
@@ -57,6 +59,13 @@ const SingleCourse = () => {
     });
     console.log(data);
   };
+  const markincompleted = async () => {
+    const { data } = await axios.post(`/api/mark-incomplete`, {
+      courseId: course._id,
+      lessonId: course.lessons[clicked]._id,
+    });
+    console.log(data);
+  };
 
   return (
     <StudentRoute>
@@ -84,6 +93,21 @@ const SingleCourse = () => {
                 icon={<Avatar>{index + 1}</Avatar>}
               >
                 {lesson.title.substring(0, 30)}
+                {completedLessons.includes(lesson._id) ? (
+                  <CheckCircleFilled
+                    className="ms-2 float-end text-primary"
+                    style={{
+                      marginTop: 13,
+                    }}
+                  />
+                ) : (
+                  <MinusCircleFilled
+                    className="ms-2 float-end text-danger"
+                    style={{
+                      marginTop: 13,
+                    }}
+                  />
+                )}
               </Item>
             ))}
           </Menu>
@@ -93,9 +117,16 @@ const SingleCourse = () => {
             <>
               <div className="col alert alert-primary rounded">
                 <b> {course.lessons[clicked].title.substring(0, 30)} </b>
-                <span className="float-end pointer" onClick={markCompleted}>
-                  Mark as Completed
-                </span>
+
+                {completedLessons.includes(course.lessons[clicked]._id) ? (
+                  <span className="float-end pointer" onClick={markincompleted}>
+                    Mark as incomplete
+                  </span>
+                ) : (
+                  <span className="float-end pointer" onClick={markCompleted}>
+                    Mark as Completed
+                  </span>
+                )}
               </div>
 
               {course.lessons[clicked].video &&
