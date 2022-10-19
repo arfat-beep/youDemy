@@ -1,17 +1,18 @@
 import { Context } from "../../context";
 import InstructorRoute from "../../components/routes/InstructorRoute";
 import axios from "axios";
-import { currencyFormatter } from "../../utils/helpers";
+import { stripeCurrencyFormatter } from "../../utils/helpers";
 import { useEffect, useState } from "react";
 import { DollarOutlined, SettingOutlined } from "@ant-design/icons";
 
 const InstructorRevenue = () => {
-  const [balance, setBalance] = useState({ panding: [] });
+  const [balance, setBalance] = useState({ pending: [] });
   useEffect(() => {
     sendBalanceRequest();
   }, []);
   const sendBalanceRequest = async () => {
-    console.log("search balance");
+    const { data } = await axios.get(`/api/instructor/balance`);
+    setBalance(data);
   };
   const handlePayoutSettings = async () => {
     console.log("handlePayoutSettings");
@@ -30,7 +31,15 @@ const InstructorRevenue = () => {
             </small>
             <hr />
             <h4>
-              Pending balance <span className="float-end">$0.00</span>
+              Pending balance{" "}
+              <span className="float-end">
+                {balance.pending &&
+                  balance.pending.map((bp, i) => (
+                    <span key={i} className="float-end">
+                      {stripeCurrencyFormatter(bp)}
+                    </span>
+                  ))}
+              </span>
             </h4>
             <small>For 48 hours</small>
             <hr />
