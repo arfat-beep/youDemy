@@ -20,6 +20,8 @@ const SingleCourse = () => {
   const [lodaing, setLodaing] = useState(false);
   const [course, setCourse] = useState({ lessons: [] });
   const [completedLessons, setCompletedLessons] = useState([]);
+  // force to update state
+  const [updateState, setUpdateState] = useState(false);
 
   // router
   const router = useRouter();
@@ -57,14 +59,24 @@ const SingleCourse = () => {
       courseId: course._id,
       lessonId: course.lessons[clicked]._id,
     });
-    console.log(data);
+    setCompletedLessons([...completedLessons, course.lessons[clicked]._id]);
   };
   const markincompleted = async () => {
-    const { data } = await axios.post(`/api/mark-incomplete`, {
-      courseId: course._id,
-      lessonId: course.lessons[clicked]._id,
-    });
-    console.log(data);
+    try {
+      const { data } = await axios.post(`/api/mark-incomplete`, {
+        courseId: course._id,
+        lessonId: course.lessons[clicked]._id,
+      });
+      const all = completedLessons;
+      const index = all.indexOf(course.lessons[clicked]._id);
+      if (index > -1) {
+        all.splice(index, 1);
+        setCompletedLessons(all);
+        setUpdateState(!updateState);
+      }
+    } catch (e) {
+      console.log("Error from mark as imcompleted", e);
+    }
   };
 
   return (
