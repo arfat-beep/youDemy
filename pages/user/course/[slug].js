@@ -12,12 +12,12 @@ import {
   PlayCircleOutlined,
 } from "@ant-design/icons";
 const { Item } = Menu;
-// import Item from "antd/lib/list/Item";
 const SingleCourse = () => {
   const [clicked, setClicked] = useState(-1);
   const [collapsed, setCollapsed] = useState(false);
   const [lodaing, setLodaing] = useState(false);
   const [course, setCourse] = useState({ lessons: [] });
+  const [completedLessons, setCompletedLessons] = useState([]);
 
   // router
   const router = useRouter();
@@ -26,6 +26,19 @@ const SingleCourse = () => {
   useEffect(() => {
     if (slug) loadCourse();
   }, [slug]);
+
+  useEffect(() => {
+    if (course) loadCompletedLessons();
+  }, [course]);
+
+  const loadCompletedLessons = async () => {
+    const { data } = await axios.post(`/api/list-completed`, {
+      courseId: course._id,
+    });
+    console.log("Completed Lesson =>", data);
+    setCompletedLessons(data);
+  };
+
   const loadCourse = async () => {
     try {
       setLodaing(true);
