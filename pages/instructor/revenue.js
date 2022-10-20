@@ -1,12 +1,18 @@
 import { Context } from "../../context";
 import InstructorRoute from "../../components/routes/InstructorRoute";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { stripeCurrencyFormatter } from "../../utils/helpers";
 import { useEffect, useState } from "react";
-import { DollarOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  DollarOutlined,
+  SettingOutlined,
+  SyncOutlined,
+} from "@ant-design/icons";
 
 const InstructorRevenue = () => {
   const [balance, setBalance] = useState({ pending: [] });
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     sendBalanceRequest();
   }, []);
@@ -15,7 +21,16 @@ const InstructorRevenue = () => {
     setBalance(data);
   };
   const handlePayoutSettings = async () => {
-    console.log("handlePayoutSettings");
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`/api/instructor/payout-settings`);
+      window.location.href = data;
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      console.log("Error from handlePayoutSettings", e);
+      toast.error("Unable to access payout settings. Try latter");
+    }
   };
   return (
     <InstructorRoute>
@@ -45,10 +60,16 @@ const InstructorRevenue = () => {
             <hr />
             <h4>
               Payouts{" "}
-              <SettingOutlined
-                className="float-end pointer hover-spin"
-                onClick={handlePayoutSettings}
-              />
+              {!loading ? (
+                <SettingOutlined
+                  className="float-end pointer hover-spin"
+                  onClick={handlePayoutSettings}
+                />
+              ) : (
+                <>
+                  <SyncOutlined spin className="float-end pointer" />
+                </>
+              )}
             </h4>
             <small>
               Update your stripe account details or view previous payouts

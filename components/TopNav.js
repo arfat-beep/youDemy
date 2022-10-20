@@ -46,7 +46,7 @@ const TopNav = () => {
         icon={<AppstoreAddOutlined />}
       >
         <Link href={"/"}>
-          <a>app</a>
+          <a>youDemy</a>
         </Link>
       </Item>
       {user === null && (
