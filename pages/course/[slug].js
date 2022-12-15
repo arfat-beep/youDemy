@@ -110,7 +110,7 @@ const SingleCourse = ({ course }) => {
           setShowModal={setShowModal}
         />
       )}
-      <pre> {JSON.stringify(course, null, 4)} </pre>
+      {/* <pre> {JSON.stringify(course, null, 4)} </pre> */}
     </>
   );
 };

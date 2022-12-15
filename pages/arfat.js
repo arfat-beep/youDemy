@@ -1,47 +1,44 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Context } from "../context";
-import download from "downloadjs";
-const { degrees, PDFDocument, rgb, StandardFonts } = require("pdf-lib");
+import jsPDF from "jspdf";
+import myFont from "../public/Courgette-Regular-normal";
+import { PDFObject } from "react-pdfobject";
 
 const arfat = () => {
-  //   console.log(fs);
-  const encryptedPdf = async () => {
-    console.log("hi");
-    const url =
-      "https://matfuvit.github.io/UVIT/predavanja/literatura/TutorialsPoint%20node.js.pdf";
-
-    const existingPdfBytes = await fetch(url).then((res) => {
-      //   res.headers = { arfat: "arfat" };
-      return res.arrayBuffer();
-    });
-
-    const pdfDoc = await PDFDocument.load(existingPdfBytes);
-
-    const pages = pdfDoc.getPages();
-    const firstPage = pages[0];
-    const { width, height } = firstPage.getSize();
-    firstPage.drawText("This text was added with JavaScript!", {
-      x: 2,
-      y: 600,
-      size: 50,
-      color: rgb(0.95, 0.1, 0.1),
-      rotate: degrees(-45),
-    });
-
-    const pdfBytes = await pdfDoc.save();
-
-    download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
-    console.log("pdfBytes", pdfBytes);
-  };
+  const [url, setUrl] = useState("");
   const { state, dispatch } = useContext(Context);
   const { user } = state;
+  const pdfGenerator = async () => {
+    const doc = new jsPDF("landscape", "px", "a4", false);
+
+    doc.addImage("/certificate.png", "png", 65, 20, 500, 400);
+
+    // fonts
+    doc.addFileToVFS("MyFont.ttf", myFont);
+    doc.addFont("MyFont.ttf", "MyFont", "normal");
+    doc.setFont("MyFont");
+
+    // doc.setFont("Courgette-Regular", "normal");
+    doc.setFontSize(50);
+    doc.text(user.name, 150, 260);
+
+    doc.setFont("courier", "normal");
+    doc.setFontSize(20);
+    doc.text("for his achievements of completing ", 150, 290);
+    doc.text("in the 2022 public speaking training", 150, 310);
+    doc.text("activities", 150, 330);
+
+    setUrl(doc.output("bloburi"));
+    doc.save(`${user.name}.pdf`);
+  };
   //   console.log(user);
   return (
     <div>
       <div className="container">
         <div className="row">
           <div className="col">
-            <button onClick={() => encryptedPdf()}>arfat vai</button>
+            <button onClick={() => pdfGenerator()}>arfat vai</button>
+            <PDFObject url={url} height="800px" />
           </div>
         </div>
       </div>

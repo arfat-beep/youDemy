@@ -58,6 +58,7 @@ const CourseEdit = () => {
   const handleImage = (e) => {
     let file = e.target.files[0];
     setPreview(window.URL.createObjectURL(file));
+    console.log("file", file);
     setUploadButtonText(file.name);
     setValues({ ...values, loading: true });
     // console.log(e);
@@ -83,6 +84,7 @@ const CourseEdit = () => {
     });
   };
 
+  console.log("preview", preview);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

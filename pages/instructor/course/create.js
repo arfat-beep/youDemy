@@ -6,7 +6,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
-
 const CourseCreate = () => {
   // state
   const [values, setValues] = useState({
@@ -102,9 +101,9 @@ const CourseCreate = () => {
           handleImageRemove={handleImageRemove}
         />
       </div>
-      <pre>{JSON.stringify(values, null, 4)}</pre>
+      {/* <pre>{JSON.stringify(values, null, 4)}</pre> */}
       <hr />
-      <pre>{JSON.stringify(image, null, 4)}</pre>
+      {/* <pre>{JSON.stringify(image, null, 4)}</pre> */}
     </InstructorRoute>
   );
 };

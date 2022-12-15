@@ -88,7 +88,14 @@ const TopNav = () => {
           </Link>
         </Item>
       )}
-
+      <Item
+        icon={<TeamOutlined />}
+        key={"https://4c45f7884a3045e4.gradio.app/"}
+      >
+        <Link href={"https://4c45f7884a3045e4.gradio.app/"} passHref>
+          <a target="_black">Quest Gen</a>
+        </Link>
+      </Item>
       {/* if user exist show user name with submenu */}
       {user !== null && (
         <SubMenu

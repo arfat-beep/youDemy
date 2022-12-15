@@ -1,9 +1,10 @@
-import React, { createElement, useEffect, useState } from "react";
+import React, { createElement, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import StudentRoute from "../../../components/routes/StudentRoute";
 import { Avatar, Button, Menu } from "antd";
 import dynamic from "next/dynamic";
+import style from "../../../styles/index.module.css";
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 import ReactMarkdown from "react-markdown";
 import {
@@ -13,6 +14,9 @@ import {
   MinusCircleFilled,
   PlayCircleOutlined,
 } from "@ant-design/icons";
+import jsPDF from "jspdf";
+import myFont from "../../../public/Courgette-Regular-normal";
+import { Context } from "../../../context";
 const { Item } = Menu;
 const SingleCourse = () => {
   const [clicked, setClicked] = useState(-1);
@@ -22,6 +26,10 @@ const SingleCourse = () => {
   const [completedLessons, setCompletedLessons] = useState([]);
   // force to update state
   const [updateState, setUpdateState] = useState(false);
+
+  // context state
+  const { state, dispatch } = useContext(Context);
+  const { user } = state;
 
   // router
   const router = useRouter();
@@ -39,7 +47,7 @@ const SingleCourse = () => {
     const { data } = await axios.post(`/api/list-completed`, {
       courseId: course._id,
     });
-    console.log("Completed Lesson =>", data);
+    // console.log("Completed Lesson =>", data);
     setCompletedLessons(data);
   };
 
@@ -79,6 +87,31 @@ const SingleCourse = () => {
     }
   };
 
+  // donwload Certificate
+  const downloadCertificate = () => {
+    const doc = new jsPDF("landscape", "px", "a4", false);
+
+    doc.addImage("/certificate.png", "png", 65, 20, 500, 400);
+
+    // fonts
+    doc.addFileToVFS("MyFont.ttf", myFont);
+    doc.addFont("MyFont.ttf", "MyFont", "normal");
+    doc.setFont("MyFont");
+
+    // doc.setFont("Courgette-Regular", "normal");
+    doc.setFontSize(50);
+    doc.text(user.name, 150, 260);
+
+    doc.setFont("courier", "normal");
+    doc.setFontSize(20);
+    doc.text("for his achievements of completing ", 150, 290);
+    doc.text(`in the 2022 ${course.name}`, 150, 310);
+    doc.text(" course activities", 150, 330);
+    console.log(course);
+    doc.save(`${user.name}.pdf`);
+  };
+
+  // console.log(completedLessons.length, course.lessons.length);
   return (
     <StudentRoute>
       <div className="row">
@@ -125,6 +158,17 @@ const SingleCourse = () => {
                 )}
               </Item>
             ))}
+
+            {completedLessons.length === course.lessons.length ? (
+              <Button
+                onClick={() => downloadCertificate()}
+                className="btn text-primary mt-1  w-100 mb-2"
+              >
+                Download Certificate
+              </Button>
+            ) : (
+              ""
+            )}
           </Menu>
         </div>
         <div className="col">

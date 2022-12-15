@@ -16,3 +16,6 @@
 .hover-spin:hover {
   transform: rotate(90deg);
 }
+img {
+  width: 100%;
+}
