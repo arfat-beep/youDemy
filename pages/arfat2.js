@@ -8,7 +8,7 @@ import QuizForm from "../components/forms/QuizForm";
 const arfat2 = () => {
   const [loading, setLoading] = useState(false);
   const [submitVaule, setSubmitVaule] = useState({});
-  const apiUrl = `http://5a2e-34-71-52-249.ngrok.io`;
+  const apiUrl = `http://e54f-34-71-52-249.ngrok.io`;
 
   return (
     <>

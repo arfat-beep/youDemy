@@ -4,7 +4,7 @@ import React, { useState } from "react";
 const MCQAnswer = ({ question }) => {
   const [groupDisable, setGroupDisable] = useState(false);
   const [showAns, setShowAns] = useState(false);
-  console.log(question);
+  // console.log(question);
 
   // const onFinish = (values) => {
   //   console.log("Success:", question.answer);

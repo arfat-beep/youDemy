@@ -1,6 +1,7 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import HigherOrderQuesAnswer from "./HigherOrderQuesAnswer";
 
 const HigherOrderQuesGenerator = ({ text, url, loading, setLoading }) => {
   const [questions, setQuestions] = useState([]);
@@ -20,7 +21,6 @@ const HigherOrderQuesGenerator = ({ text, url, loading, setLoading }) => {
           });
         setQuestions(data);
         setLoading(false);
-        console.log("from data", data);
       };
       fetchFun();
     } catch (e) {
@@ -37,7 +37,18 @@ const HigherOrderQuesGenerator = ({ text, url, loading, setLoading }) => {
           <LoadingOutlined className="h1 text-danger my-auto" />
         </div>
       ) : (
-        <pre>{JSON.stringify(questions, null, 4)}</pre>
+        <>
+          <div className="container">
+            <div className="row">
+              {questions[0]
+                ? questions.map((question, i) => (
+                    <HigherOrderQuesAnswer key={i} question={question} />
+                  ))
+                : ""}
+            </div>
+          </div>
+          <pre>{JSON.stringify(questions, null, 4)}</pre>
+        </>
       )}
     </>
   );

@@ -31,19 +31,17 @@ const MCQGenerator = ({ text, url, loading, setLoading }) => {
       console.log("Errro from ", e);
     }
   }, []);
-  console.log("loading value", loading);
+  // console.log("loading value", loading);
   //   console.log("all questions", questions);
   return (
     <>
-      <h1>MCQ</h1>
+      <h1 className="text-center">MCQ</h1>
       {loading ? (
         <div className="text-center">
           <LoadingOutlined className="h1 text-danger my-auto" />
         </div>
       ) : (
         <>
-          {/* <MCQAnswer /> */}
-
           {questions[0] ? (
             <>
               {" "}
