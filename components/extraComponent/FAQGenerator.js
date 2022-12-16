@@ -32,7 +32,7 @@ const FAQGenerator = ({ text, url, loading, setLoading }) => {
   console.log(questions);
   return (
     <>
-      <h1>FAQ</h1>
+      <h1 className="text-center">FAQ</h1>
       {loading ? (
         <div className="text-center">
           <LoadingOutlined className="h1 text-danger my-auto" />

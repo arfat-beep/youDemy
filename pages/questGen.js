@@ -5,16 +5,22 @@ import HigherOrderQuesGenerator from "../components/extraComponent/HigherOrderQu
 import MCQAnswer from "../components/extraComponent/MCQAnswer";
 import MCQGenerator from "../components/extraComponent/MCQGenerator";
 import QuizForm from "../components/forms/QuizForm";
-const arfat2 = () => {
+const questGen = () => {
   const [loading, setLoading] = useState(false);
   const [submitVaule, setSubmitVaule] = useState({});
   const apiUrl = `http://e54f-34-71-52-249.ngrok.io`;
 
   return (
     <>
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-md-7  shadow rounded p-4">
+            <div className="text-center">
+              <h1>Generate Questions</h1>
+              <small className="text-danger">
+                Please use paragraph type content for more question
+              </small>
+            </div>
             <QuizForm setSubmitVaule={setSubmitVaule} loading={loading} />
             {submitVaule.type === "mcq" && (
               <MCQGenerator
@@ -47,4 +53,4 @@ const arfat2 = () => {
   );
 };
 
-export default arfat2;
+export default questGen;

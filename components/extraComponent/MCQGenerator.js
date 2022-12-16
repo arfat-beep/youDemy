@@ -60,7 +60,7 @@ const MCQGenerator = ({ text, url, loading, setLoading }) => {
             ""
           )}
 
-          <pre>{JSON.stringify(questions, null, 4)}</pre>
+          {/* <pre>{JSON.stringify(questions, null, 4)}</pre> */}
         </>
       )}
     </>

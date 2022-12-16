@@ -7,7 +7,7 @@ const FAQAnswer = ({ question }) => {
       <div className="col-12">
         <h5>{`${question.id}.  ${question.question}`}</h5>
         <div className="container">
-          <p className="text-success">{question.answer}</p>
+          <b className="text-success">Ans: {question.answer}</b>
         </div>
       </div>
     </>
