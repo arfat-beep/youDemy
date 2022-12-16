@@ -1,6 +1,7 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import FAQAnswer from "./FAQAnswer";
 
 const FAQGenerator = ({ text, url, loading, setLoading }) => {
   const [questions, setQuestions] = useState([]);
@@ -31,13 +32,24 @@ const FAQGenerator = ({ text, url, loading, setLoading }) => {
   console.log(questions);
   return (
     <>
-      <h1>faq</h1>
+      <h1>FAQ</h1>
       {loading ? (
         <div className="text-center">
           <LoadingOutlined className="h1 text-danger my-auto" />
         </div>
       ) : (
-        <pre>{JSON.stringify(questions, null, 4)}</pre>
+        <>
+          <div className="container">
+            <div className="row">
+              {questions[0]
+                ? questions.map((question, i) => (
+                    <FAQAnswer key={i} question={question} />
+                  ))
+                : ""}
+            </div>
+          </div>
+          {/* <pre>{JSON.stringify(questions, null, 4)}</pre> */}
+        </>
       )}
     </>
   );

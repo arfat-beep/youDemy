@@ -47,7 +47,7 @@ const HigherOrderQuesGenerator = ({ text, url, loading, setLoading }) => {
                 : ""}
             </div>
           </div>
-          <pre>{JSON.stringify(questions, null, 4)}</pre>
+          {/* <pre>{JSON.stringify(questions, null, 4)}</pre> */}
         </>
       )}
     </>
