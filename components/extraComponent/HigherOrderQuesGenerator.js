@@ -9,9 +9,15 @@ const HigherOrderQuesGenerator = ({ text, url, loading, setLoading }) => {
       setLoading(true);
       const fetchFun = async () => {
         let x = [];
-        const { data } = await axios.get(`${url}/high`, {
-          params: { text: text },
-        });
+        const { data } = await axios
+          .get(`${url}/high`, {
+            params: { text: text },
+          })
+          .catch((e) => {
+            alert("Data error please try again");
+            setLoading(false);
+            return e;
+          });
         setQuestions(data);
         setLoading(false);
         console.log("from data", data);
