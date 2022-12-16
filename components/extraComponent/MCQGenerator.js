@@ -1,18 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const MCQGenerator = ({ text }) => {
+const MCQGenerator = ({ text, url }) => {
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
     try {
       const fetchFun = async () => {
         let x = [];
-        const { data } = await axios.get(
-          "http://4008-34-138-209-115.ngrok.io/mcq",
-          {
-            params: { text: text },
-          }
-        );
+        const { data } = await axios.get(`${url}/mcq`, {
+          params: { text: text },
+        });
         setQuestions(data);
         console.log("from data", data);
       };
