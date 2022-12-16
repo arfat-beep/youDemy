@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import FAQGenerator from "../components/extraComponent/FAQGenerator";
 import HigherOrderQuesGenerator from "../components/extraComponent/HigherOrderQuesGenerator";
 import MCQGenerator from "../components/extraComponent/MCQGenerator";
 import QuizForm from "../components/forms/QuizForm";
 const arfat2 = () => {
+  const [loading, setLoading] = useState(false);
   const [submitVaule, setSubmitVaule] = useState({});
   const apiUrl = `http://70db-34-138-209-115.ngrok.io`;
   return (
@@ -11,12 +13,30 @@ const arfat2 = () => {
       <div className="container">
         <div className="row">
           <div className="col">
-            <QuizForm setSubmitVaule={setSubmitVaule} />
+            <QuizForm setSubmitVaule={setSubmitVaule} loading={loading} />
             {submitVaule.type === "mcq" && (
-              <MCQGenerator text={submitVaule.text} url={apiUrl} />
+              <MCQGenerator
+                loading={loading}
+                setLoading={setLoading}
+                text={submitVaule.text}
+                url={apiUrl}
+              />
             )}
             {submitVaule.type === "high" && (
-              <HigherOrderQuesGenerator text={submitVaule.text} url={apiUrl} />
+              <HigherOrderQuesGenerator
+                loading={loading}
+                setLoading={setLoading}
+                text={submitVaule.text}
+                url={apiUrl}
+              />
+            )}
+            {submitVaule.type === "faq" && (
+              <FAQGenerator
+                loading={loading}
+                setLoading={setLoading}
+                text={submitVaule.text}
+                url={apiUrl}
+              />
             )}
           </div>
         </div>

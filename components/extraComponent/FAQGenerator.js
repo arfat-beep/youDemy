@@ -2,7 +2,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const HigherOrderQuesGenerator = ({ text, url, loading, setLoading }) => {
+const FAQGenerator = ({ text, url, loading, setLoading }) => {
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
     try {
@@ -25,7 +25,7 @@ const HigherOrderQuesGenerator = ({ text, url, loading, setLoading }) => {
   console.log(questions);
   return (
     <>
-      <h1 className="text-center">Higher order</h1>
+      <h1>faq</h1>
       {loading ? (
         <div className="text-center">
           <LoadingOutlined className="h1 text-danger my-auto" />
@@ -37,4 +37,4 @@ const HigherOrderQuesGenerator = ({ text, url, loading, setLoading }) => {
   );
 };
 
-export default HigherOrderQuesGenerator;
+export default FAQGenerator;

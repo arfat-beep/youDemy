@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Button, Checkbox, Form, Input, Radio } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-const QuizForm = ({ setSubmitVaule }) => {
+const QuizForm = ({ setSubmitVaule, loading }) => {
   const [radioVaule, setRadioVaule] = useState("mcq");
   const onFinish = (values) => {
     setSubmitVaule(values);
@@ -10,6 +10,7 @@ const QuizForm = ({ setSubmitVaule }) => {
   return (
     <>
       <Form
+        disabled={loading}
         name="basic"
         labelCol={{
           span: 8,
