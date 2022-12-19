@@ -5,7 +5,6 @@ import ApiUrlSubmit from "../components/extraComponent/ApiUrlSubmit";
 import FAQGenerator from "../components/extraComponent/FAQGenerator";
 import HigherOrderQuesGenerator from "../components/extraComponent/HigherOrderQuesGenerator";
 import MCQGenerator from "../components/extraComponent/MCQGenerator";
-import QuestGenInfoModal from "../components/extraComponent/QuestGenInfoModal";
 import QuizForm from "../components/forms/QuizForm";
 const questGen = () => {
   const [loading, setLoading] = useState(false);
@@ -42,7 +41,6 @@ const questGen = () => {
             After running complete you'll get a link from ngro copy than and
             paste it here
           </Modal>
-          <QuestGenInfoModal />
           {!apiUrl ? (
             <>
               <div className="col-md-7   shadow rounded p-4 mb-5">
