@@ -1,25 +1,56 @@
-import axios from "axios";
+import { Button, Modal } from "antd";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import ApiUrlSubmit from "../components/extraComponent/ApiUrlSubmit";
 import FAQGenerator from "../components/extraComponent/FAQGenerator";
 import HigherOrderQuesGenerator from "../components/extraComponent/HigherOrderQuesGenerator";
-import MCQAnswer from "../components/extraComponent/MCQAnswer";
 import MCQGenerator from "../components/extraComponent/MCQGenerator";
+import QuestGenInfoModal from "../components/extraComponent/QuestGenInfoModal";
 import QuizForm from "../components/forms/QuizForm";
 const questGen = () => {
   const [loading, setLoading] = useState(false);
   const [submitVaule, setSubmitVaule] = useState({});
   const [apiUrl, setApiUrl] = useState("");
-  // const apiUrl = `http://e54f-34-71-52-249.ngrok.io`;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
       <div className="container mt-5">
         <div className="row justify-content-center">
+          {/* modal for info  */}
+          <Modal
+            title="Info for best practice"
+            visible={isModalOpen}
+            onCancel={() => setIsModalOpen(false)}
+            onOk={() => setIsModalOpen(false)}
+          >
+            To find url
+            <Link
+              href="https://colab.research.google.com/drive/1wot-PnsVOJTF5wBhyMX7nyerynshOKBD?usp=sharing"
+              passHref
+            >
+              <a
+                href="https://colab.research.google.com/drive/1wot-PnsVOJTF5wBhyMX7nyerynshOKBD?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {" "}
+                Click here.
+              </a>
+            </Link>
+            Then press "run all" in "runtime" options <br />
+            After running complete you'll get a link from ngro copy than and
+            paste it here
+          </Modal>
+          <QuestGenInfoModal />
           {!apiUrl ? (
             <>
               <div className="col-md-7   shadow rounded p-4 mb-5">
-                <ApiUrlSubmit apiUrl={apiUrl} setApiUrl={setApiUrl} />
+                <ApiUrlSubmit
+                  apiUrl={apiUrl}
+                  setIsModalOpen={setIsModalOpen}
+                  setApiUrl={setApiUrl}
+                />
               </div>
             </>
           ) : (

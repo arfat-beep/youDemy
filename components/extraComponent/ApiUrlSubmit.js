@@ -1,7 +1,7 @@
 import { Button, Form, Input, message } from "antd";
 import React from "react";
 
-const ApiUrlSubmit = ({ setApiUrl, apiUrl }) => {
+const ApiUrlSubmit = ({ setApiUrl, apiUrl, setIsModalOpen }) => {
   console.log(apiUrl);
   const [form] = Form.useForm();
   const onFinish = ({ url }) => {
@@ -42,6 +42,13 @@ const ApiUrlSubmit = ({ setApiUrl, apiUrl }) => {
       <Form.Item>
         <Button type="primary" htmlType="submit">
           Submit url
+        </Button>
+        <Button
+          className="m-2"
+          type="primary"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Click here for link
         </Button>
       </Form.Item>
     </Form>
