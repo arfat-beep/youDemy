@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CourseCard from "../components/cards/CourseCard";
 import SliderComponent from "../components/extraComponent/SliderComponent";
-import PartnerBanner from "../components/extraComponent/partnerBanner";
+import PartnerBanner from "../components/extraComponent/PartnerBanner";
 const index = ({ courses }) => {
   // const [courses, setCourses] = useState([]);
   // useEffect(() => {
