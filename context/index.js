@@ -64,8 +64,12 @@ const Provider = ({ children }) => {
 
   useEffect(() => {
     const getCsrfToken = async () => {
-      const { data } = await axios.get("/api/csrf-token");
-      // console.log("CSRF", data);
+      const { data } = await axios.get(
+        "https://youdemy-server.onrender.com/api/csrf-token"
+      );
+      const url = require("url");
+      console.log("url", url);
+      console.log("CSRF", data);
       axios.defaults.headers["X-CSRF-Token"] = data.getCsrfToken;
     };
     getCsrfToken();

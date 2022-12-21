@@ -19,7 +19,7 @@ app
       server.use(
         "/api",
         createProxyMiddleware({
-          target: "https://youdemy-server.onrender.com/",
+          target: "https://youdemy-server.onrender.com",
           changeOrigin: true,
         })
       );
