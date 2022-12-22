@@ -33,11 +33,14 @@ const login = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const { data } = await axios.post(`/api/login`, {
-        name,
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        "https://youdemy-server.onrender.com/api/login",
+        {
+          name,
+          email,
+          password,
+        }
+      );
       // console.log("login response", data);
       dispatch({
         type: "LOGIN",
